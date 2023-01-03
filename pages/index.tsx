@@ -1,18 +1,12 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react';
 import { SignUpForm, SignInForm } from '@/componets/forms'
-import { getSession } from '@/utils/auth'
+import useSession from '@/hooks/useSession';
+import { signOutUser } from '@/utils/auth';
 
 export default function Home() {
-  const [session, setSession] = useState<{data: any, error: any}>({data: null, error: null})
-  console.log(session.data)
-  useEffect(() => {
-    (async () => {
-      setSession(await getSession())
-    })();
-  }, [])
+  const {data, error} = useSession();
 
-  if(!session) {
+  if(!data || !data.session) {
     return (
       <>
         <Head>
@@ -31,7 +25,9 @@ export default function Home() {
 
   return (
     <div>
-      {session.data.session.user.email}
+      {data.session.user.email}
+
+      <button onClick={async () => { await signOutUser() }} >Sign Out</button>
     </div>
   )
   
