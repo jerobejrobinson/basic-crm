@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { SignUpForm, SignInForm } from '@/componets/forms'
+import { SignUpForm, SignInForm, AddNewProspect } from '@/componets/forms'
 import useSession from '@/hooks/useSession';
 import { signOutUser } from '@/utils/auth';
 
@@ -18,6 +18,7 @@ export default function Home() {
         <main>
           <SignInForm />
           <SignUpForm />
+          <AddNewProspect />
         </main>
       </>
     )

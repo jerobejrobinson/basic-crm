@@ -1,24 +1,24 @@
 import { signInWithEmail } from "@/utils/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm, SubmitHandler } from 'react-hook-form';
 
+type Inputs = {
+    email: string,
+    password: string
+}
 export default function SignInForm() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful }} = useForm<Inputs>();
+    const onSubmit: SubmitHandler<Inputs> = data => signInWithEmail(data.email, data.password);
+
+    useEffect(() => {
+        reset()
+    }, [isSubmitSuccessful])
+   
     return (
-        <div>
-            <p>Sign In</p>
-            <form>
-                <input type="email" name="email" id="email" placeholder="example@example.com" onChange={e => setEmail(e.target.value)}/>
-                <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)} />
-                <button onClick={(e) => {
-                    e.preventDefault();
-                    if(email == '' || password == "") {
-                        alert('must complete form');
-                        return;
-                    }
-                    signInWithEmail(email, password)
-                }}>Sign In</button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <input {...register("email", { required: true })} placeholder=" Email" type="email"/>
+            <input {...register("email", { required: true })} placeholder=" Password" type="password"/>
+            <button type="submit">Sign In</button>
+        </form>
     )
 }
