@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import { SignUpForm, SignInForm, AddNewProspect } from '@/componets/forms'
+import { SignUpForm, SignInForm, AddNewProspect } from '@/components/forms'
 import useSession from '@/hooks/useSession';
 import { signOutUser } from '@/utils/auth';
+import { CustomerInfoRow } from '@/components/utils';
 
 export default function Home() {
   const {data, error} = useSession();
@@ -20,6 +21,7 @@ export default function Home() {
           <SignInForm />
           <SignUpForm />
           <AddNewProspect />
+          <CustomerInfoRow />
         </main>
       </>
     )
